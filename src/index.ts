@@ -1,6 +1,8 @@
 import expess from "express";
 import mongoose from "mongoose";
 import userRoute from "./routes/userRiuts";
+import productRouter from "./routes/productRoute";
+import { sendIntoProducts } from "./services/productService";
 
 const app = expess();
 const port = 3001;
@@ -17,9 +19,14 @@ mongoose
     .then(() => console.log("DataBase Connected"))
     .catch((err) =>
         console.log("Faild on Connecting to DataBase =================> ", err)
-    );
+);
 
 
+//sed the products into database
+sendIntoProducts();
+
+
+app.use('/products', productRouter);
 app.use('/user', userRoute);
 
 app.listen(port, () => {
