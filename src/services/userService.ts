@@ -6,18 +6,18 @@ import jwt from "jsonwebtoken";
 interface registerPaamsr {
     firstName: string;
     lastName: string;
-    emaile: string;
+    email: string;
     password: string;
 }
 
 export const register = async ({
     firstName,
     lastName,
-    emaile,
+    email,
     password,
 }: registerPaamsr) => {
     //search user in database
-    const user = await userModel.findOne({ emaile });
+    const user = await userModel.findOne({ email });
 
     //if user is exist he have to login not register
     if (user) {
@@ -31,23 +31,23 @@ export const register = async ({
     const newUser = new userModel({
         firstName,
         lastName,
-        emaile,
+        email,
         password: hashedPassword,
     });
     await newUser.save();
 
-    return { data: generateToken({ firstName, lastName, emaile }), statuscode: 200 };
+    return { data: generateToken({ firstName, lastName, email }), statuscode: 200 };
 };
 
 //login input type interface
 interface loginParams {
-    emaile: string;
+    email: string;
     password: string;
 }
 
-export const login = async ({ emaile, password }: loginParams) => {
+export const login = async ({ email, password }: loginParams) => {
     //search user in database
-    const user = await userModel.findOne({ emaile });
+    const user = await userModel.findOne({ email });
 
     //if user is not exist : this means he's intered incorect emaile
     if (!user) {
@@ -63,7 +63,7 @@ export const login = async ({ emaile, password }: loginParams) => {
     }
 
     //else return his data
-    return { data: generateToken({ firstName: user.firstName, lastName: user.lastName, emaile: user.emaile }), statuscode: 200 };
+    return { data: generateToken({ firstName: user.firstName, lastName: user.lastName, email: user.email }), statuscode: 200 };
 };
 
 //generateToken function
