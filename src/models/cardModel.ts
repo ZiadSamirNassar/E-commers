@@ -3,7 +3,7 @@ import { IProduct } from "./productModel";
 
 const cardStatusEnum = ["active", "completed"];
 
-interface ICardItem extends Document{
+interface ICardItem {
     product: IProduct,
     unitPrice: number,
     quantity: number,

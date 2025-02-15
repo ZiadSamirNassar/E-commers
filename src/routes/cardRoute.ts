@@ -1,12 +1,12 @@
 import express from "express";
-import { getActiveCardFourUser } from "../services/cardService";
-import { auth ,ExtendRequest} from "../middlewares/validateJWT";
+import { addItemsToCard, getActiveCardFourUser } from "../services/cardService";
+import { auth, ExtendRequest } from "../middlewares/validateJWT";
 import { Request } from "express";
 const router = express.Router();
 
 router.get("/",
     auth(),
-    async (req:ExtendRequest, res) => {
+    async (req: ExtendRequest, res) => {
         const user = req.user;
         console.log(user);
 
@@ -19,5 +19,12 @@ router.get("/",
         }
     }
 );
+
+router.post("/items", auth(), async (req: ExtendRequest, res) => {
+    const userId = req?.user?._id;
+    const { productId, quantity } = req.body;
+    const { data, statuscode } = await addItemsToCard({ userId, productId, quantity });
+    res.status(statuscode).send(data);
+})
 
 export default router;
