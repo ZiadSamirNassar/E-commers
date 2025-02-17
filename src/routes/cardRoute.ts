@@ -1,5 +1,5 @@
 import express from "express";
-import { addItemsToCard, getActiveCardFourUser, updateItemsInCard } from "../services/cardService";
+import { deleteItemsFromCard, addItemsToCard, getActiveCardFourUser, updateItemsInCard } from "../services/cardService";
 import { auth, ExtendRequest } from "../middlewares/validateJWT";
 import { Request } from "express";
 const router = express.Router();
@@ -32,6 +32,14 @@ router.put("/items", auth(), async (req: ExtendRequest, res) => {
     const userId = req?.user?._id;
     const { productId, quantity } = req.body;
     const { data, statuscode } = await updateItemsInCard({ userId, productId, quantity });
+    res.status(statuscode).send(data);
+})
+
+
+router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
+    const userId = req?.user?._id;
+    const { productId } = req.params;
+    const { data, statuscode } = await deleteItemsFromCard({ userId, productId });
     res.status(statuscode).send(data);
 })
 

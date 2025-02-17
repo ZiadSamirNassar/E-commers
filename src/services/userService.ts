@@ -68,5 +68,5 @@ export const login = async ({ email, password }: loginParams) => {
 
 //generateToken function
 const generateToken = (data: any) => {
-    return jwt.sign(data, '|_mZ2`eUM[TZwk)OlD1muk?qgAj3r"', { expiresIn: "24h" });
+    return jwt.sign(data, '|_mZ2`eUM[TZwk)OlD1muk?qgAj3r"', { expiresIn: "240h" });
 };

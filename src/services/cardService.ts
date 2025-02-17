@@ -68,7 +68,7 @@ interface updateItemsInCard {
     productId: any;
     quantity: number;
 }
-export const updateItemsInCard = async ({ userId, productId, quantity}: updateItemsInCard) => {
+export const updateItemsInCard = async ({ userId, productId, quantity }: updateItemsInCard) => {
     const card = await getActiveCardFourUser({ userId });
 
     //Dose the item in the card
@@ -84,7 +84,7 @@ export const updateItemsInCard = async ({ userId, productId, quantity}: updateIt
     }
 
     if (product.stock < quantity) {
-        return{ data: "There is no stok", statuscode: 400 };
+        return { data: "There is no stok", statuscode: 400 };
     }
 
     existtsInCard.quantity = quantity;
@@ -105,3 +105,33 @@ export const updateItemsInCard = async ({ userId, productId, quantity}: updateIt
 
     return { data: updatedCard, statuscode: 200 };
 }
+
+
+
+interface deleteItemsFromCard {
+    userId: string;
+    productId: string;
+}
+export const deleteItemsFromCard = async ({ userId, productId }: deleteItemsFromCard) => {
+    const card = await getActiveCardFourUser({ userId });
+
+    const existtsInCard = card.items.find((p) => p.product.toString() === productId)
+
+    if (!existtsInCard) {
+        return { data: "Item Dos'n exists in the card.", statuscode: 400 };
+    }
+
+    const otherItemsInCard = card.items.filter((p) => p.product.toString() !== productId);
+
+    let total = otherItemsInCard.reduce((sum, product) => {
+        sum += product.unitPrice * product.quantity;
+        return sum;
+    }, 0);
+
+    card.items = otherItemsInCard;
+    card.totalAmount = total;
+
+    const updatedCard = await card.save();
+
+    return { data: updatedCard, statuscode: 200 };
+};

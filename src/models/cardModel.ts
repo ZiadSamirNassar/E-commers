@@ -4,7 +4,7 @@ import { IProduct } from "./productModel";
 const cardStatusEnum = ["active", "completed"];
 
 interface ICardItem {
-    product: IProduct,
+    product: IProduct | string,
     unitPrice: number,
     quantity: number,
 };
