@@ -25,6 +25,17 @@ export const getActiveCardFourUser = async ({
     return card;
 };
 
+interface clearCard{
+    userId: string;
+}
+export const clearCard = async ({ userId }: clearCard) => {
+    const card = await getActiveCardFourUser({ userId });
+    card.totalAmount = 0;
+    card.items = [];
+    const cleardCard = await card.save();
+    return { data: cleardCard, statuscode: 200 };
+};
+
 interface addItemsToCard {
     userId: string;
     productId: any;

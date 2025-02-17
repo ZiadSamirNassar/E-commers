@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteItemsFromCard, addItemsToCard, getActiveCardFourUser, updateItemsInCard } from "../services/cardService";
+import { clearCard, deleteItemsFromCard, addItemsToCard, getActiveCardFourUser, updateItemsInCard } from "../services/cardService";
 import { auth, ExtendRequest } from "../middlewares/validateJWT";
 import { Request } from "express";
 const router = express.Router();
@@ -20,12 +20,18 @@ router.get("/",
     }
 );
 
+router.delete("/", auth(), async (req: ExtendRequest, res) => {
+    const userId = req.user.id;
+    const { data, statuscode } = await clearCard({ userId });
+    res.status(statuscode).send(data);
+});
+
 router.post("/items", auth(), async (req: ExtendRequest, res) => {
     const userId = req?.user?._id;
     const { productId, quantity } = req.body;
     const { data, statuscode } = await addItemsToCard({ userId, productId, quantity });
     res.status(statuscode).send(data);
-})
+});
 
 
 router.put("/items", auth(), async (req: ExtendRequest, res) => {
@@ -33,7 +39,7 @@ router.put("/items", auth(), async (req: ExtendRequest, res) => {
     const { productId, quantity } = req.body;
     const { data, statuscode } = await updateItemsInCard({ userId, productId, quantity });
     res.status(statuscode).send(data);
-})
+});
 
 
 router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
@@ -41,6 +47,8 @@ router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
     const { productId } = req.params;
     const { data, statuscode } = await deleteItemsFromCard({ userId, productId });
     res.status(statuscode).send(data);
-})
+});
+
+
 
 export default router;
