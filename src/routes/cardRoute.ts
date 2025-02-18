@@ -1,5 +1,5 @@
 import express from "express";
-import { clearCard, deleteItemsFromCard, addItemsToCard, getActiveCardFourUser, updateItemsInCard } from "../services/cardService";
+import { checkout, clearCard, deleteItemsFromCard, addItemsToCard, getActiveCardFourUser, updateItemsInCard } from "../services/cardService";
 import { auth, ExtendRequest } from "../middlewares/validateJWT";
 import { Request } from "express";
 const router = express.Router();
@@ -49,6 +49,11 @@ router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
     res.status(statuscode).send(data);
 });
 
-
+router.post("/checkout", auth(), async (req: ExtendRequest, res) => {
+    const userId = req?.user?._id;
+    const { address } = req.body;
+    const { data, statuscode } = await checkout({ userId, address });
+    res.status(statuscode).send(data);
+});
 
 export default router;

@@ -1,4 +1,5 @@
 import { cardModel } from "../models/cardModel";
+import { IOrderItem, orderModel } from "../models/orderModel";
 import productModel from "../models/productModel";
 
 interface createCardforUser {
@@ -117,8 +118,6 @@ export const updateItemsInCard = async ({ userId, productId, quantity }: updateI
     return { data: updatedCard, statuscode: 200 };
 }
 
-
-
 interface deleteItemsFromCard {
     userId: string;
     productId: string;
@@ -145,4 +144,65 @@ export const deleteItemsFromCard = async ({ userId, productId }: deleteItemsFrom
     const updatedCard = await card.save();
 
     return { data: updatedCard, statuscode: 200 };
+};
+
+interface checkout {
+    userId: string;
+    address: string;
+}
+export const checkout = async ({ userId, address }: checkout) => {
+    if (!address) {
+        return { data: "Address is required", statuscode: 400 };
+    }
+
+    const card = await getActiveCardFourUser({ userId });
+    console.log("Card:", card); // Debugging: Check the card object
+
+    if (!card || !card.items || card.items.length === 0) {
+        return { data: "Card is empty", statuscode: 400 };
+    }
+
+    const orderItems: IOrderItem[] = [];
+
+    // Use a for...of loop to handle async operations properly
+    for (const item of card.items) {
+        console.log("Product ID:", item.product); // Debugging: Check the product ID
+        const product = await productModel.findById(item.product);
+        console.log("Product:", product); // Debugging: Check the product
+
+        if (!product) {
+            return { data: "Product not found", statuscode: 400 };
+        }
+
+        const orderItem: IOrderItem = {
+            productTitel: product.title,
+            productImage: product.image,
+            unitPrice: item.unitPrice,
+            quantity: item.quantity,
+        };
+
+        orderItems.push(orderItem);
+    }
+
+    console.log("Order Items:", orderItems); // Debugging: Check the orderItems array
+    if (orderItems.length === 0) {
+        return { data: "Card is empty", statuscode: 400 };
+    }
+
+    // Create order
+    const order = await orderModel.create({
+        items: orderItems,
+        totalAmount: card.totalAmount,
+        userId,
+        address,
+    });
+    console.log("Order:", order); // Debugging: Check the created order
+
+    await order.save();
+
+    // Update card status
+    card.status = "completed";
+    await card.save();
+
+    return { data: order, statuscode: 200 };
 };
