@@ -5,9 +5,11 @@ import { getAllProducts } from "../services/productService";
 const router = express.Router();
 
 router.get("/", async (request, response) => {
-    const products = await getAllProducts();
+    try{const products = await getAllProducts();
 
-    response.status(200).send(products);
+    response.status(200).send(products);}catch(err){
+        response.status(500).send("Internal Server Error");
+    }
 });
 
 export default router;

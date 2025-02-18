@@ -23,7 +23,7 @@ export const auth = () => {
             return;
         }
 
-        jwt.verify(token, '|_mZ2`eUM[TZwk)OlD1muk?qgAj3r"', async (err, paylod) => {
+        jwt.verify(token, process.env.JWT_SECRET || " ", async (err, paylod) => {
             if (err) {
                 res.status(403).send("Invalid Token");
                 return;

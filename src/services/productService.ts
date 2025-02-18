@@ -1,3 +1,4 @@
+import { TypeFormatFlags } from "typescript";
 import productModel from "../models/productModel"
 
 export const getAllProducts = async () => {
@@ -5,7 +6,7 @@ export const getAllProducts = async () => {
 };
 
 export const sendIntoProducts = async () => {
-    const sampleProducts = [
+    try{const sampleProducts = [
         {
             title: "Dell labtop",
             image: "https://static.toiimg.com/thumb/resizemode-4,width-1280,height-720,msid-111114820/111114820.jpg",
@@ -21,5 +22,8 @@ export const sendIntoProducts = async () => {
     const products = await getAllProducts();
     if (products.length === 0) {
         await productModel.insertMany(sampleProducts);
+        }
+    } catch(err) { 
+        return { data: "Internal Server Error", statuscode: 500 };
     }
 };

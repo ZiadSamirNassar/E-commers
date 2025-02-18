@@ -1,3 +1,5 @@
+import("dotenv/config");
+
 import expess from "express";
 import mongoose from "mongoose";
 import userRoute from "./routes/userRiuts";
