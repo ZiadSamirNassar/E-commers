@@ -18,7 +18,8 @@ router.get("/",
 );
 
 router.delete("/", auth(), async (req: ExtendRequest, res) => {
-    try{const userId = req.user.id;
+    try{
+    const userId = req.user.id;
     const { data, statuscode } = await clearCard({ userId });
         res.status(statuscode).send(data);
     } catch (err) {
@@ -56,10 +57,12 @@ router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
 });
 
 router.post("/checkout", auth(), async (req: ExtendRequest, res) => {
-    try{const userId = req?.user?._id;
-    const { address } = req.body;
-    const { data, statuscode } = await checkout({ userId, address });
-    res.status(statuscode).send(data);}catch(err){
+    try {
+        const userId = req?.user?._id;
+        const { address } = req.body;
+        const { data, statuscode } = await checkout({ userId, address });
+        res.status(statuscode).send(data);
+    } catch (err) {
         res.status(500).send("Internal Server Error");
     }
 });
