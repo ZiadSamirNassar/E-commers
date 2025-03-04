@@ -1,0 +1,16 @@
+.product-img{
+    width: 100%;
+    border-radius: 10px;
+    height: 300px;
+}
+
+.review_container{
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.review_container p{
+    margin: 0;
+}
