@@ -38,6 +38,7 @@ export const auth = () => {
                 email: string;
                 firstName: string;
                 lastName: string;
+                role: string;
             };
 
             //fetch user from database based on paylode

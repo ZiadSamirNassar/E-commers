@@ -4,6 +4,7 @@ import { auth, ExtendRequest } from "../middlewares/validateJWT";
 import { Request } from "express";
 const router = express.Router();
 
+//get user card
 router.get("/",
     auth(),
     async (req: ExtendRequest, res) => {
@@ -17,6 +18,7 @@ router.get("/",
     }
 );
 
+//clear user card
 router.delete("/", auth(), async (req: ExtendRequest, res) => {
     try{
     const userId = req.user.id;
@@ -27,6 +29,7 @@ router.delete("/", auth(), async (req: ExtendRequest, res) => {
     }
 });
 
+//add item to card
 router.post("/items", auth(), async (req: ExtendRequest, res) => {
     try{const userId = req?.user?._id;
     const { productId, quantity } = req.body;
@@ -36,7 +39,7 @@ router.post("/items", auth(), async (req: ExtendRequest, res) => {
     }
 });
 
-
+//update item in card
 router.put("/items", auth(), async (req: ExtendRequest, res) => {
     try{const userId = req?.user?._id;
     const { productId, quantity } = req.body;
@@ -46,7 +49,7 @@ router.put("/items", auth(), async (req: ExtendRequest, res) => {
     }
 });
 
-
+//delete item from card
 router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
     try{const userId = req?.user?._id;
     const { productId } = req.params;
@@ -56,6 +59,7 @@ router.delete("/items/:productId", auth(), async (req: ExtendRequest, res) => {
     }
 });
 
+//checkout care to create an order
 router.post("/checkout", auth(), async (req: ExtendRequest, res) => {
     try {
         const userId = req?.user?._id;

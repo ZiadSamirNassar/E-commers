@@ -33,6 +33,7 @@ export const register = async ({
         lastName,
         email,
         password: hashedPassword,
+        role: "0",
     });
     await newUser.save();
 

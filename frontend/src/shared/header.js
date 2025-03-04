@@ -22,7 +22,8 @@ const Header = () => {
                     
                     <Link className='nav-link' to={"/login"}>Login</Link>
                     <Link className='nav-link' to={"/register"}>Registration</Link>
-                    <Link className='nav-link' to={"/products"}>Manage products</Link>
+                    <Link className='nav-link' to={"/products"}>produc</Link>
+                    <Link className='nav-link' to={"/Manage-products"}>Manage products</Link>
                  </Nav>
 
                 <Nav className='ms-auto'>

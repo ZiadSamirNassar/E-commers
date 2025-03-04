@@ -11,6 +11,8 @@ const app = expess();
 const port = 3001;
 
 app.use(expess.json());
+app.use(expess.urlencoded({ extended: true }));
+app.use(expess.static("uploads"));
 
 app.use((req, res, next) => {
     console.log(`Request URL: http://localhost:3001${req.url}`);

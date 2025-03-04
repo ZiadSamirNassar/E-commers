@@ -14,16 +14,52 @@ const Home = () => {
             </Stack>
 
             <div className="row">
-                <div className="col-3 card-product-container">
+                <div className="col-3 card-product-container mb-5">
                     <ProductCard/>
                 </div>
-                <div className="col-3 card-product-container">
+                <div className="col-3 card-product-container mb-5">
                     <ProductCard/>
                 </div>
-                <div className="col-3 card-product-container">
+                <div className="col-3 card-product-container mb-5">
                     <ProductCard/>
                 </div>
-                <div className="col-3 card-product-container">
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
+                    <ProductCard/>
+                </div>
+                <div className="col-3 card-product-container mb-5">
                     <ProductCard/>
                 </div>
             </div>
