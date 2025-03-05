@@ -32,18 +32,47 @@ export const sendIntoProducts = async () => {
 };
 
 interface createItem {
-    titel: string;
+    title: string;
     description: string;
-    image: string;
+    file: string;
     price: number;
     stock: number;
 }
-export const createItem =async ({titel, description, image, price, stock}: createItem) => {
+export const createItem = async ({title, description, file, price, stock}: createItem) => {
   try{
 
-    
+             if(!title){
+                return{ data: "Item Titel is Required", statusCode: 404}
+             }
+
+            var product = await productModel.findOne({ title });
+            if(product){
+                return{ data: "Item is alride Exist", statusCode: 404}
+            }
+
+             if(!description){
+                return{ data: "Item Description is Required", statusCode: 404}
+             }
+             if(!price || price <= 0){
+                return{ data: "Item price is not valid", statusCode: 404}
+             }
+             if(!stock || stock <= 0){
+                return{ data: "Item Stock is not valid", statusCode: 404}
+             }
+
+            product = await productModel.create({
+                title,
+                description,
+                image: file,
+                price,
+                stock,
+             });
+
+             await product.save();
+             return{ data: product, statusCode: 200};
 
   } catch(err) { 
-    return { data: "Internal Server Error", statuscode: 500 };
+    console.log(err);
+    return { data: "Internal Server Error", statusCode: 500 };
 }
 };
